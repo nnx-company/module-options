@@ -5,7 +5,6 @@
  */
 namespace Nnx\ModuleOptions\PhpUnit\Test;
 
-
 use Nnx\ModuleOptions\PhpUnit\TestData\TestPaths;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 

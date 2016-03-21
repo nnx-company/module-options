@@ -5,7 +5,6 @@
  */
 namespace Nnx\ModuleOptions\PhpUnit\Test;
 
-
 use Zend\Loader\AutoloaderFactory;
 use Zend\Loader\StandardAutoloader;
 use RuntimeException;
