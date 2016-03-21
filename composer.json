@@ -34,7 +34,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Nnx\\ModuleOptions": "src/"
+      "Nnx\\ModuleOptions\\": "src/"
     },
     "classmap": [
       "./Module.php"
