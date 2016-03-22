@@ -6,11 +6,17 @@
 namespace Nnx\ModuleOptions;
 
 
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Listener\ServiceListenerInterface;
+use Zend\ModuleManager\ModuleManager;
+use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
+use Zend\ModuleManager\Feature\InitProviderInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 
 /**
@@ -20,8 +26,51 @@ use Zend\ModuleManager\Feature\BootstrapListenerInterface;
  */
 class Module implements
     BootstrapListenerInterface,
-    AutoloaderProviderInterface
+    AutoloaderProviderInterface,
+    InitProviderInterface,
+    ConfigProviderInterface
 {
+    /**
+     * Имя секции в конфиги приложения отвечающей за настройки модуля
+     *
+     * @var string
+     */
+    const CONFIG_KEY = 'nnx_module_options';
+
+    /**
+     * @param ModuleManagerInterface $manager
+     *
+     * @throws Exception\InvalidArgumentException
+     * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
+     */
+    public function init(ModuleManagerInterface $manager)
+    {
+        if (!$manager instanceof ModuleManager) {
+            $errMsg =sprintf('Module manager not implement %s', ModuleManager::class);
+            throw new Exception\InvalidArgumentException($errMsg);
+        }
+
+        /** @var ServiceLocatorInterface $sm */
+        $sm = $manager->getEvent()->getParam('ServiceManager');
+
+        if (!$sm instanceof ServiceLocatorInterface) {
+            $errMsg = sprintf('Service locator not implement %s', ServiceLocatorInterface::class);
+            throw new Exception\InvalidArgumentException($errMsg);
+        }
+        /** @var ServiceListenerInterface $serviceListener */
+        $serviceListener = $sm->get('ServiceListener');
+        if (!$serviceListener instanceof ServiceListenerInterface) {
+            $errMsg = sprintf('ServiceListener not implement %s', ServiceListenerInterface::class);
+            throw new Exception\InvalidArgumentException($errMsg);
+        }
+
+        $serviceListener->addServiceManager(
+            ModuleOptionsPluginManagerInterface::class,
+            ModuleOptionsPluginManager::CONFIG_KEY,
+            ModuleOptionsProviderInterface::class,
+            'getModuleOptionsConfig'
+        );
+    }
 
     /**
      * @param EventInterface $e
@@ -54,4 +103,12 @@ class Module implements
         );
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getConfig()
+    {
+        return include __DIR__ . '/config/module.config.php';
+    }
 } 
