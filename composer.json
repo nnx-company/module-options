@@ -40,7 +40,8 @@
       "Nnx\\ModuleOptions\\": "src/"
     },
     "classmap": [
-      "./Module.php"
+      "./Module.php",
+      "src/"
     ]
   },
   "autoload-dev": {
@@ -49,7 +50,8 @@
       "Nnx\\ModuleOptions\\PhpUnit\\TestData\\": "test/phpunit/_files"
     },
     "classmap": [
-      "./test/phpunit/Bootstrap.php"
+      "./test/phpunit/Bootstrap.php",
+      "test/"
     ]
   }
 }
