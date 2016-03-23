@@ -73,6 +73,8 @@ class Module implements
     }
 
     /**
+     * @inheritdoc
+     *
      * @param EventInterface $e
      *
      * @return array|void
