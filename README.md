@@ -21,3 +21,7 @@ Develop:
 
 Функционал для работы с настройками модуля
 
+# Документация
+- [Online documentation](http://module-options.readthedocs.org/ru/dev/)
+- [Documentation source files](doc/book/ru/)
+
