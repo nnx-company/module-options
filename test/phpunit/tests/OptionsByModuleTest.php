@@ -17,7 +17,7 @@ use Nnx\ModuleOptions\PhpUnit\TestData\OptionsByModuleTest\TestModule1\Options\M
  *
  * @package Nnx\ModuleOptions\PhpUnit\Test
  */
-class ModuleTest extends AbstractHttpControllerTestCase
+class OptionsByModuleTest extends AbstractHttpControllerTestCase
 {
 
     /**
