@@ -5,12 +5,14 @@
  */
 namespace Nnx\ModuleOptions\PhpUnit\TestData\OptionsByModuleTest\TestModule2\Options;
 
+use Nnx\ModuleOptions\ModuleOptionsInterface;
+
 /**
  * Class ModuleOptions
  *
  * @package Nnx\ModuleOptions\PhpUnit\TestData\OptionsByModuleTest\TestModule2\Options
  */
-class ModuleOptions
+class ModuleOptions implements ModuleOptionsInterface
 {
 
 }

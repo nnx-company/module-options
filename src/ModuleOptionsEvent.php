@@ -16,32 +16,32 @@ class ModuleOptionsEvent extends Event implements ModuleOptionsEventInterface
 {
 
     /**
-     * Имя класса модуля
+     * Имя модуля
      *
      * @var string
      */
-    protected $moduleClassName;
+    protected $moduleName;
 
     /**
      * @inheritdoc
      *
      * @return string
      */
-    public function getModuleClassName()
+    public function getModuleName()
     {
-        return $this->moduleClassName;
+        return $this->moduleName;
     }
 
     /**
      * @inheritdoc
      *
-     * @param string $moduleClassName
+     * @param string $moduleName
      *
      * @return $this
      */
-    public function setModuleClassName($moduleClassName)
+    public function setModuleName($moduleName)
     {
-        $this->moduleClassName = $moduleClassName;
+        $this->moduleName = $moduleName;
 
         return $this;
     }

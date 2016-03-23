@@ -20,18 +20,18 @@ interface ModuleOptionsEventInterface extends EventInterface
     const LOAD_MODULE_OPTIONS_EVENT = 'moduleOptions.load';
 
     /**
-     * Имя класса модуля
+     * Имя модуля
      *
      * @return string
      */
-    public function getModuleClassName();
+    public function getModuleName();
 
     /**
-     * Устанавливает имя класса модуля
+     * Устанавливает имя модуля
      *
-     * @param string $moduleClassName
+     * @param string $moduleName
      *
      * @return $this
      */
-    public function setModuleClassName($moduleClassName);
+    public function setModuleName($moduleName);
 }

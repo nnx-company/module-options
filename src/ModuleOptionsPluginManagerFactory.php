@@ -5,6 +5,7 @@
  */
 namespace Nnx\ModuleOptions;
 
+use Zend\ModuleManager\ModuleManagerInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -27,6 +28,9 @@ class ModuleOptionsPluginManagerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new ModuleOptionsPluginManager();
+        /** @var ModuleManagerInterface $moduleManager */
+        $moduleManager = $serviceLocator->get('moduleManager');
+
+        return new ModuleOptionsPluginManager($moduleManager);
     }
 }
