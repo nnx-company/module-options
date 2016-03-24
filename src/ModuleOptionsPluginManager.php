@@ -99,7 +99,7 @@ class ModuleOptionsPluginManager extends AbstractPluginManager implements Module
             $modulesIndex[$prepareModuleName] = strlen($prepareModuleName);
         }
 
-        asort($modulesIndex, SORT_NUMERIC);
+        arsort($modulesIndex, SORT_NUMERIC);
         $this->modulesIndex = $modulesIndex;
 
         return $this->modulesIndex;
