@@ -148,6 +148,7 @@ class ModuleOptionsPluginManager extends AbstractPluginManager implements Module
         foreach ($index as $moduleName => $moduleNameLength) {
             if ($classNameLength > $moduleNameLength && 0 === strrpos($className, $moduleName)) {
                 $resultModuleName = $moduleName;
+                break;
             }
         }
 
