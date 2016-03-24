@@ -259,10 +259,10 @@ class ModuleOptionsPluginManager extends AbstractPluginManager implements Module
 
         $suffix = $moduleOptions->getModuleOptionsClassNameSuffix();
 
-        $prepareModuleNamespace = rtrim($moduleName, '//');
-        $prepareSuffix = ltrim($suffix, '//');
+        $prepareModuleNamespace = rtrim($moduleName, '\\');
+        $prepareSuffix = ltrim($suffix, '\\');
 
-        $moduleOptionsServiceName = $prepareModuleNamespace . '//' . $prepareSuffix;
+        $moduleOptionsServiceName = $prepareModuleNamespace . '\\' . $prepareSuffix;
 
         if (!$this->has($moduleOptionsServiceName)) {
             return null;
