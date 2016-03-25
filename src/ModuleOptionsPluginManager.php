@@ -51,6 +51,7 @@ class ModuleOptionsPluginManager extends AbstractPluginManager implements Module
      */
     protected $classNameToModuleName = [];
 
+
     /**
      * Менеджер модулей
      *
@@ -129,6 +130,28 @@ class ModuleOptionsPluginManager extends AbstractPluginManager implements Module
     /**
      * @inheritdoc
      *
+     * @param string $className
+     *
+     * @return boolean
+     *
+     * @throws Exception\ResolveModuleNameException
+     * @throws Exception\InvalidEventException
+     */
+    public function hasOptionsByClassName($className)
+    {
+        if (!$this->hasModuleNameByClassName($className)) {
+            return false;
+        }
+
+        $moduleName = $this->getModuleNameByClassName($className);
+
+        return $this->hasOptionsByModuleName($moduleName);
+    }
+
+
+    /**
+     * @inheritdoc
+     *
      * @param $className
      *
      * @return string
@@ -137,28 +160,56 @@ class ModuleOptionsPluginManager extends AbstractPluginManager implements Module
      */
     public function getModuleNameByClassName($className)
     {
-        if (array_key_exists($className, $this->classNameToModuleName)) {
-            return $this->classNameToModuleName[$className];
-        }
-
-        $index = $this->getModulesIndex();
-
-        $classNameLength = strlen($className);
-        $resultModuleName = null;
-        foreach ($index as $moduleName => $moduleNameLength) {
-            if ($classNameLength > $moduleNameLength && 0 === strrpos($className, $moduleName)) {
-                $resultModuleName = $moduleName;
-                break;
-            }
-        }
-
+        $resultModuleName = $this->autoDetectModuleNameByClassName($className);
         if (null === $resultModuleName) {
             $errMsg = sprintf('Unable to determine the module name for a class of %s', $className);
             throw new Exception\ResolveModuleNameException($errMsg);
         }
-        $this->classNameToModuleName[$className] = $resultModuleName;
 
-        return $this->classNameToModuleName[$className];
+        return $resultModuleName;
+    }
+
+    /**
+     * Автоматиченское определение имени модуля, по имени любого класса входящего в этот модуль. В случае если определить
+     * не удалось, возвращается null
+     *
+     * @param $className
+     *
+     * @return string
+     */
+    public function autoDetectModuleNameByClassName($className)
+    {
+        if (array_key_exists($className, $this->classNameToModuleName)) {
+            $resultModuleName =  $this->classNameToModuleName[$className];
+        } else {
+            $index = $this->getModulesIndex();
+            $classNameLength = strlen($className);
+
+            $resultModuleName = null;
+            foreach ($index as $moduleName => $moduleNameLength) {
+                if ($classNameLength > $moduleNameLength && 0 === strrpos($className, $moduleName)) {
+                    $resultModuleName = $moduleName;
+                    break;
+                }
+            }
+            $this->classNameToModuleName[$className] = $resultModuleName;
+        }
+
+        return $resultModuleName;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param $className
+     *
+     * @return boolean
+     */
+    public function hasModuleNameByClassName($className)
+    {
+        $resultModuleName = $this->autoDetectModuleNameByClassName($className);
+
+        return null !== $resultModuleName;
     }
 
     /**
@@ -174,25 +225,59 @@ class ModuleOptionsPluginManager extends AbstractPluginManager implements Module
      */
     public function getOptionsByModuleName($moduleName)
     {
-        if (array_key_exists($moduleName, $this->moduleNameToModuleOptions)) {
-            return $this->moduleNameToModuleOptions[$moduleName];
-        }
-
-        $event = $this->eventFactory();
-        $event->setName(ModuleOptionsEventInterface::LOAD_MODULE_OPTIONS_EVENT);
-        $event->setTarget($this);
-        $event->setModuleName($moduleName);
-
-        $eventCollections = $this->getEventManager()->trigger($event, function ($result) {
-            return $result instanceof ModuleOptionsInterface;
-        });
-
-        $moduleOptions = $eventCollections->last();
-
+        $moduleOptions = $this->resolveModuleOptionsByModuleName($moduleName);
         $this->validatePlugin($moduleOptions);
 
         return $moduleOptions;
     }
+
+    /**
+     * Попытка получить объект ModuleOptions, на основе имени модуля. В случае если такой возможности нет, возвращается null
+     *
+     * @param string $moduleName
+     *
+     * @return mixed|null
+     *
+     * @throws Exception\InvalidEventException
+     */
+    public function resolveModuleOptionsByModuleName($moduleName)
+    {
+        if (array_key_exists($moduleName, $this->moduleNameToModuleOptions)) {
+            $moduleOptions = $this->moduleNameToModuleOptions[$moduleName];
+        } else {
+            $event = $this->eventFactory();
+            $event->setName(ModuleOptionsEventInterface::LOAD_MODULE_OPTIONS_EVENT);
+            $event->setTarget($this);
+            $event->setModuleName($moduleName);
+
+            $eventCollections = $this->getEventManager()->trigger($event, function ($result) {
+                return $result instanceof ModuleOptionsInterface;
+            });
+
+            $moduleOptionsResult = $eventCollections->last();
+
+            $moduleOptions = $this->isValidModuleOptions($moduleOptionsResult) ? $moduleOptionsResult : null;
+            $this->moduleNameToModuleOptions[$moduleName] = $moduleOptions;
+        }
+
+        return $moduleOptions;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param string $moduleName
+     *
+     * @return boolean
+     * @throws Exception\InvalidEventException
+     */
+    public function hasOptionsByModuleName($moduleName)
+    {
+        $moduleOptions = $this->resolveModuleOptionsByModuleName($moduleName);
+
+        return null !== $moduleOptions;
+    }
+
 
     /**
      * Фабрика для создания события
@@ -278,7 +363,7 @@ class ModuleOptionsPluginManager extends AbstractPluginManager implements Module
      */
     public function validatePlugin($plugin)
     {
-        if ($plugin instanceof ModuleOptionsInterface) {
+        if ($this->isValidModuleOptions($plugin)) {
             return;
         }
 
@@ -287,6 +372,18 @@ class ModuleOptionsPluginManager extends AbstractPluginManager implements Module
             (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
             ModuleOptionsInterface::class
         ));
+    }
+
+    /**
+     * Проверяет что переданный объект является валидным экземпляром ModuleOptions
+     *
+     * @param $plugin
+     *
+     * @return boolean
+     */
+    public function isValidModuleOptions($plugin)
+    {
+        return $plugin instanceof ModuleOptionsInterface;
     }
 
     /**

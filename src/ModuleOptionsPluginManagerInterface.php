@@ -26,6 +26,15 @@ interface ModuleOptionsPluginManagerInterface extends ContainerInterface
     public function getOptionsByClassName($className);
 
     /**
+     * Проверяет можно ли по имени класса, получить объект настроек модуля, к которому принадлежит данный класс
+     *
+     * @param string $className
+     *
+     * @return boolean
+     */
+    public function hasOptionsByClassName($className);
+
+    /**
      * По имени класса, возвращает имя модуля к которому принадлежит данный класс
      *
      * @param $className
@@ -36,6 +45,15 @@ interface ModuleOptionsPluginManagerInterface extends ContainerInterface
 
 
     /**
+     * Проверяет есть ли возможность определить имя модуля, по имени класса входящим в этот модуль
+     *
+     * @param $className
+     *
+     * @return boolean
+     */
+    public function hasModuleNameByClassName($className);
+
+    /**
      * По имени модуля возвращает объект с его настройками
      *
      * @param string $moduleName
@@ -43,4 +61,13 @@ interface ModuleOptionsPluginManagerInterface extends ContainerInterface
      * @return ModuleOptionsInterface
      */
     public function getOptionsByModuleName($moduleName);
+
+    /**
+     * По имени модуля осуществляет проверку, есть ли у данного модуля настройки
+     *
+     * @param string $moduleName
+     *
+     * @return boolean
+     */
+    public function hasOptionsByModuleName($moduleName);
 }
