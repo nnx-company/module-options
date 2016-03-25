@@ -49,6 +49,18 @@ class OptionsByModuleTest extends AbstractHttpControllerTestCase
      ];
 
     /**
+     * Данные для кейса, когда проверятся можно ли по имени класса получить, имя модуля
+     *
+     * @var array
+     */
+    protected static $hasModuleNameByClassNameTestData = [
+        [FooTestService1::class, true],
+        [FooTestService2::class, true],
+        [BarTestService1::class, true],
+        [BarTestService2::class, true],
+    ];
+
+    /**
      * Данные для кейса, когда проверятся получения настроек модуля по имени модуля
      *
      * @var array
@@ -77,6 +89,18 @@ class OptionsByModuleTest extends AbstractHttpControllerTestCase
     {
         return static::$classNameToModuleName;
     }
+
+
+    /**
+     * Возвращает данные для кейса, когда проверятся можно ли по имени класса получить, имя модуля
+     *
+     * @return array
+     */
+    public function getHasModuleNameByClassNameTestData()
+    {
+        return static::$hasModuleNameByClassNameTestData;
+    }
+
 
 
     /**
@@ -140,6 +164,32 @@ class OptionsByModuleTest extends AbstractHttpControllerTestCase
 
         static::assertEquals($expectedModuleName, $actualClassName);
     }
+
+    /**
+     * @dataProvider getHasModuleNameByClassNameTestData
+     *
+     * @param string $className
+     * @param boolean $expected
+     */
+    public function testHasModuleNameByClassName($className, $expected)
+    {
+        /** @noinspection PhpIncludeInspection */
+        $this->setApplicationConfig(
+            include TestPaths::getPathToOptionsByModuleTestAppConfig()
+        );
+
+
+        /** @var ModuleOptionsPluginManagerInterface $moduleOptionsManager */
+        $moduleOptionsManager = $this->getApplicationServiceLocator()->get(ModuleOptionsPluginManagerInterface::class);
+
+        static::assertInstanceOf(ModuleOptionsPluginManagerInterface::class, $moduleOptionsManager);
+
+        $actual = $moduleOptionsManager->hasModuleNameByClassName($className);
+
+        static::assertEquals($expected, $actual);
+    }
+
+
 
 
     /**
