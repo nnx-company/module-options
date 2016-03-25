@@ -25,5 +25,3 @@ Develop:
 - [Online documentation](http://module-options.readthedocs.org/ru/dev/)
 - [Documentation source files](doc/book/ru/)
 
-
-
