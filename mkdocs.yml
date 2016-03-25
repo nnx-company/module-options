@@ -3,5 +3,5 @@ pages:
     - index.md
 site_name: module-options
 site_description: 'Функционал для работы с настройками модуля'
-repo_url: 'https://github.com/nnx-company/module-options'
-copyright: 'Copyright (c) 2016 <a href="https://github.com/nnx-company">NNX</a>'
+repo_url: 'https://github.com/nnx-framework/module-options'
+copyright: 'Copyright (c) 2016 <a href="https://github.com/nnx-framework">NNX</a>'
