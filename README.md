@@ -21,6 +21,9 @@ Develop:
 
 Функционал для работы с настройками модуля
 
+# API
+- [Module Api](API.md)
+
 # Документация
 - [Online documentation](http://module-options.readthedocs.org/ru/dev/)
 - [Documentation source files](doc/book/ru/)
