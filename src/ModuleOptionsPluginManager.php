@@ -68,6 +68,13 @@ class ModuleOptionsPluginManager extends AbstractPluginManager implements Module
     protected $modulesIndex;
 
     /**
+     * Имена модулей, по формату совпадающие с именами испольуземыми в \Zend\ModuleManager\ModuleManager
+     *
+     * @var array
+     */
+    protected $normalizeModuleNameByClassName = [];
+
+    /**
      * ModuleOptionsPluginManager constructor.
      *
      * @param ModuleManagerInterface $moduleManager
@@ -167,6 +174,25 @@ class ModuleOptionsPluginManager extends AbstractPluginManager implements Module
         }
 
         return $resultModuleName;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param $className
+     *
+     * @return string
+     *
+     * @throws Exception\ResolveModuleNameException
+     */
+    public function getNormalizeModuleNameByClassName($className)
+    {
+        if (!array_key_exists($className, $this->normalizeModuleNameByClassName)) {
+            $moduleName = $this->getModuleNameByClassName($className);
+            $this->normalizeModuleNameByClassName[$className] = rtrim($moduleName, '\\');
+        }
+
+        return $this->normalizeModuleNameByClassName[$className];
     }
 
     /**

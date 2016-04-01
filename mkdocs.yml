@@ -1,6 +1,8 @@
 docs_dir: doc/book/ru
 pages:
     - index.md
+    - 'Описание модуля': 'module-description.md'
+    - 'Абстрактаня фабрика для созданя ModuleOptions': 'module-options-auto-create.md'
 site_name: module-options
 site_description: 'Функционал для работы с настройками модуля'
 repo_url: 'https://github.com/nnx-framework/module-options'

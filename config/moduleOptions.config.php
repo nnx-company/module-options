@@ -12,6 +12,9 @@ return [
     ModuleOptionsPluginManager::CONFIG_KEY => [
         'factories' => [
             ModuleOptions::class => ModuleOptionsFactory::class
+        ],
+        'abstract_factories' => [
+            DefaultModuleOptionsAbstractFactory::class => DefaultModuleOptionsAbstractFactory::class
         ]
     ]
 ];

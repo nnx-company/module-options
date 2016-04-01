@@ -43,6 +43,16 @@ interface ModuleOptionsPluginManagerInterface extends ContainerInterface
      */
     public function getModuleNameByClassName($className);
 
+    /**
+     * По имени класса, возвращает имя модуля к которому принадлежит класс. Имя модуля по формату совпадает с
+     * именем испольуземым в \Zend\ModuleManager\ModuleManager
+     *
+     * @param $className
+     *
+     * @return string
+     */
+    public function getNormalizeModuleNameByClassName($className);
+
 
     /**
      * Проверяет есть ли возможность определить имя модуля, по имени класса входящим в этот модуль

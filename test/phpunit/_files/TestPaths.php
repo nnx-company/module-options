@@ -47,4 +47,23 @@ class TestPaths
     {
         return  __DIR__ . '/../_files/OptionsByModuleTest/module/';
     }
+
+    /**
+     * Путь до дириктории приложения в котором находится тестовые модуля для проверки работы абстрактной фабрики, для
+     * создания ModuleOptions
+     *
+     * @return string
+     */
+    public static function getPathToDefaultModuleOptionsAbstractFactoryAppModuleDir()
+    {
+        return  __DIR__ . '/../_files/DefaultModuleOptionsAbstractFactory/module/';
+    }
+
+    /**
+     * Путь до конфига приложения исполььзуемого для проверки работы абстрактной фабрики, создающей ModuleOptions
+     */
+    public static function getPathToDefaultModuleOptionsAbstractFactoryAppConfig()
+    {
+        return  __DIR__ . '/../_files/DefaultModuleOptionsAbstractFactory/application.config.php';
+    }
 }
