@@ -15,7 +15,7 @@ interface ModuleConfigKeyProviderInterface
     /**
      * Возвращает ключ по которому из конфигов приложения, можно получить конфиг модуля
      *
-     * @return array
+     * @return string
      */
     public function getModuleConfigKey();
 }
