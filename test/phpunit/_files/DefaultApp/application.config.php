@@ -1,15 +1,15 @@
 <?php
 
 use Nnx\ModuleOptions\PhpUnit\TestData\TestPaths;
-
+use Nnx\ModuleOptions\Module;
 
 return [
     'modules'                 => [
-        'Nnx\\ModuleOptions'
+        Module::MODULE_NAME
     ],
     'module_listener_options' => [
         'module_paths'      => [
-            'Nnx\\ModuleOptions' => TestPaths::getPathToModule(),
+            Module::MODULE_NAME => TestPaths::getPathToModule(),
         ],
         'config_glob_paths' => [
             __DIR__ . '/config/autoload/{{,*.}global,{,*.}local}.php',

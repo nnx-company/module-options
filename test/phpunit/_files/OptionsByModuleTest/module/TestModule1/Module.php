@@ -16,6 +16,14 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 class Module implements
     AutoloaderProviderInterface
 {
+
+    /**
+     * Имя модуля
+     *
+     * @var string
+     */
+    const MODULE_NAME = __NAMESPACE__;
+
     /**
      * @return array
      */

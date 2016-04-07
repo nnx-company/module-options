@@ -7,7 +7,7 @@ namespace Nnx\ModuleOptions\PhpUnit\Test;
 
 use Nnx\ModuleOptions\PhpUnit\TestData\TestPaths;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
-
+use Nnx\ModuleOptions\Module;
 
 /**
  * Class ModuleTest
@@ -17,8 +17,10 @@ use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 class ModuleTest extends AbstractHttpControllerTestCase
 {
     /**
+     * Проверка инициализации модуля
      *
      * @return void
+     * @throws \Zend\Stdlib\Exception\LogicException
      */
     public function testLoadModule()
     {
@@ -27,6 +29,6 @@ class ModuleTest extends AbstractHttpControllerTestCase
             include TestPaths::getPathToDefaultAppConfig()
         );
 
-        $this->assertModulesLoaded(['Nnx\\ModuleOptions']);
+        $this->assertModulesLoaded([Module::MODULE_NAME]);
     }
 }

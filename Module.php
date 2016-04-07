@@ -38,6 +38,13 @@ class Module implements
     const CONFIG_KEY = 'nnx_module_options';
 
     /**
+     * Имя модуля
+     *
+     * @var string
+     */
+    const MODULE_NAME = __NAMESPACE__;
+
+    /**
      * @param ModuleManagerInterface $manager
      *
      * @throws Exception\InvalidArgumentException

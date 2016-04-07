@@ -8,6 +8,7 @@ namespace Nnx\ModuleOptions\PhpUnit\Test;
 use Zend\Loader\AutoloaderFactory;
 use Zend\Loader\StandardAutoloader;
 use RuntimeException;
+use Nnx\ModuleOptions\Module;
 
 error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
@@ -56,7 +57,7 @@ class Bootstrap
                 StandardAutoloader::class => [
                     'autoregister_zf' => true,
                     'namespaces' => [
-                        'Nnx\\ModuleOptions' => __DIR__ . '/../../src/',
+                        Module::MODULE_NAME => __DIR__ . '/../../src/',
                         __NAMESPACE__ => __DIR__ . '/tests/',
                         'Nnx\\ModuleOptions\\PhpUnit\\TestData' => __DIR__ . '/_files'
                     ]

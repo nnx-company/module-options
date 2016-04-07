@@ -15,6 +15,8 @@ use Nnx\ModuleOptions\PhpUnit\TestData\OptionsByModuleTest\TestModule2\TestServi
 use Nnx\ModuleOptions\PhpUnit\TestData\OptionsByModuleTest\TestModule2\TestService\BarTestService2;
 use Nnx\ModuleOptions\PhpUnit\TestData\OptionsByModuleTest\TestModule2\Options\ModuleOptions as TestModuleOptions2;
 use Nnx\ModuleOptions\PhpUnit\TestData\OptionsByModuleTest\TestModule3\Module as TestModule3;
+use Nnx\ModuleOptions\PhpUnit\TestData\OptionsByModuleTest as TestApp;
+
 
 /**
  * Class ModuleTest
@@ -42,10 +44,10 @@ class OptionsByModuleTest extends AbstractHttpControllerTestCase
      * @var array
      */
      protected static $classNameToModuleName = [
-         [FooTestService1::class, 'Nnx\\ModuleOptions\\PhpUnit\\TestData\\OptionsByModuleTest\\TestModule1\\'],
-         [FooTestService2::class, 'Nnx\\ModuleOptions\\PhpUnit\\TestData\\OptionsByModuleTest\\TestModule1\\'],
-         [BarTestService1::class, 'Nnx\\ModuleOptions\\PhpUnit\\TestData\\OptionsByModuleTest\\TestModule2\\'],
-         [BarTestService2::class, 'Nnx\\ModuleOptions\\PhpUnit\\TestData\\OptionsByModuleTest\\TestModule2\\'],
+         [FooTestService1::class, TestApp\TestModule1\Module::MODULE_NAME . '\\'],
+         [FooTestService2::class, TestApp\TestModule1\Module::MODULE_NAME. '\\'],
+         [BarTestService1::class, TestApp\TestModule2\Module::MODULE_NAME. '\\'],
+         [BarTestService2::class, TestApp\TestModule2\Module::MODULE_NAME. '\\'],
      ];
 
     /**
@@ -66,8 +68,8 @@ class OptionsByModuleTest extends AbstractHttpControllerTestCase
      * @var array
      */
     protected static $moduleNameToOptionModuleClassName = [
-        ['Nnx\\ModuleOptions\\PhpUnit\\TestData\\OptionsByModuleTest\\TestModule1', TestModuleOptions1::class],
-        ['Nnx\\ModuleOptions\\PhpUnit\\TestData\\OptionsByModuleTest\\TestModule2', TestModuleOptions2::class],
+        [TestApp\TestModule1\Module::MODULE_NAME, TestModuleOptions1::class],
+        [TestApp\TestModule2\Module::MODULE_NAME, TestModuleOptions2::class],
     ];
 
     /**
@@ -120,6 +122,11 @@ class OptionsByModuleTest extends AbstractHttpControllerTestCase
      *
      * @param string $className
      * @param string $moduleOptionsClassName
+     *
+     * @throws \Zend\Stdlib\Exception\LogicException
+     * @throws \Zend\ServiceManager\ServiceManager
+     * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
+     * @throws \PHPUnit_Framework_AssertionFailedError
      */
     public function testGetOptionsByClassName($className, $moduleOptionsClassName)
     {
@@ -146,6 +153,10 @@ class OptionsByModuleTest extends AbstractHttpControllerTestCase
      *
      * @param $className
      * @param $expectedModuleName
+     *
+     * @throws \Zend\Stdlib\Exception\LogicException
+     * @throws \Zend\ServiceManager\ServiceManager
+     * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
      */
     public function testGetModuleNameByClassName($className, $expectedModuleName)
     {
@@ -170,6 +181,10 @@ class OptionsByModuleTest extends AbstractHttpControllerTestCase
      *
      * @param string $className
      * @param boolean $expected
+     *
+     * @throws \Zend\Stdlib\Exception\LogicException
+     * @throws \Zend\ServiceManager\ServiceManager
+     * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
      */
     public function testHasModuleNameByClassName($className, $expected)
     {
@@ -197,6 +212,9 @@ class OptionsByModuleTest extends AbstractHttpControllerTestCase
      *
      * @param string $moduleName
      * @param string $expectedModuleOptionsClassName
+     * @throws \Zend\Stdlib\Exception\LogicException
+     * @throws \Zend\ServiceManager\ServiceManager
+     * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
      */
     public function testGetOptionsByModuleName($moduleName, $expectedModuleOptionsClassName)
     {
@@ -223,6 +241,10 @@ class OptionsByModuleTest extends AbstractHttpControllerTestCase
      *
      * @expectedException \Nnx\ModuleOptions\Exception\RuntimeException
      * @expectedExceptionMessage Plugin of type Nnx\ModuleOptions\PhpUnit\TestData\OptionsByModuleTest\TestModule3\Options\ModuleOptions is invalid; must implement Nnx\ModuleOptions\ModuleOptionsInterface
+     *
+     * @throws \Zend\Stdlib\Exception\LogicException
+     * @throws \Zend\ServiceManager\ServiceManager
+     * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
      */
     public function testGetInvalidModuleOptions()
     {
