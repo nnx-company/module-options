@@ -39,18 +39,6 @@ class OptionsByModuleTest extends AbstractHttpControllerTestCase
     ];
 
     /**
-     * Данные для кейса, когда проверятся получения имени модуля, по имени класса из данного модуля
-     *
-     * @var array
-     */
-     protected static $classNameToModuleName = [
-         [FooTestService1::class, TestApp\TestModule1\Module::MODULE_NAME . '\\'],
-         [FooTestService2::class, TestApp\TestModule1\Module::MODULE_NAME . '\\'],
-         [BarTestService1::class, TestApp\TestModule2\Module::MODULE_NAME . '\\'],
-         [BarTestService2::class, TestApp\TestModule2\Module::MODULE_NAME . '\\'],
-     ];
-
-    /**
      * Данные для кейса, когда проверятся можно ли по имени класса получить, имя модуля
      *
      * @var array
@@ -89,7 +77,12 @@ class OptionsByModuleTest extends AbstractHttpControllerTestCase
      */
     public function getClassNameToModuleNameData()
     {
-        return static::$classNameToModuleName;
+        return [
+            [FooTestService1::class, TestApp\TestModule1\Module::MODULE_NAME . '\\'],
+            [FooTestService2::class, TestApp\TestModule1\Module::MODULE_NAME . '\\'],
+            [BarTestService1::class, TestApp\TestModule2\Module::MODULE_NAME . '\\'],
+            [BarTestService2::class, TestApp\TestModule2\Module::MODULE_NAME . '\\'],
+        ];
     }
 
 
