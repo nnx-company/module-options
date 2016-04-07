@@ -45,9 +45,9 @@ class OptionsByModuleTest extends AbstractHttpControllerTestCase
      */
      protected static $classNameToModuleName = [
          [FooTestService1::class, TestApp\TestModule1\Module::MODULE_NAME . '\\'],
-         [FooTestService2::class, TestApp\TestModule1\Module::MODULE_NAME. '\\'],
-         [BarTestService1::class, TestApp\TestModule2\Module::MODULE_NAME. '\\'],
-         [BarTestService2::class, TestApp\TestModule2\Module::MODULE_NAME. '\\'],
+         [FooTestService2::class, TestApp\TestModule1\Module::MODULE_NAME . '\\'],
+         [BarTestService1::class, TestApp\TestModule2\Module::MODULE_NAME . '\\'],
+         [BarTestService2::class, TestApp\TestModule2\Module::MODULE_NAME . '\\'],
      ];
 
     /**
