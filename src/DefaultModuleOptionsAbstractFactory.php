@@ -58,7 +58,7 @@ class DefaultModuleOptionsAbstractFactory implements AbstractFactoryInterface
             $this->buildDataForModuleOptionsCreate($serviceLocator, $requestedName);
         }
 
-        return null !== $this->dataForModuleOptionsCreate[$requestedName];
+        return false !== $this->dataForModuleOptionsCreate[$requestedName];
     }
 
     /**
@@ -142,6 +142,7 @@ class DefaultModuleOptionsAbstractFactory implements AbstractFactoryInterface
     {
         if (
             !array_key_exists($requestedName, $this->dataForModuleOptionsCreate)
+            || !is_array($this->dataForModuleOptionsCreate[$requestedName])
             || !array_key_exists(static::MODULE_OPTIONS_CLASS_REFLECTION, $this->dataForModuleOptionsCreate[$requestedName])
             || !array_key_exists(static::MODULE_OPTIONS_CONFIG_KEY, $this->dataForModuleOptionsCreate[$requestedName])
             || !$this->dataForModuleOptionsCreate[$requestedName][static::MODULE_OPTIONS_CLASS_REFLECTION] instanceof ReflectionClass
