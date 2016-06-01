@@ -6,4 +6,4 @@
 
 ## Оглавление
 - [Описание модуля](module-description.md)
-- [Абстрактаня фабрика для созданя ModuleOptions][module-options-auto-create.md]
+- [Абстрактная фабрика для создания ModuleOptions](module-options-auto-create.md)

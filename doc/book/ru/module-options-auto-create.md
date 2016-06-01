@@ -1,15 +1,15 @@
-# Автоматическое создание ModuleOptions, с помощью абстрактной фабрики \Nnx\ModuleOptions\ModuleConfigKeyProviderInterface
+# Автоматическое создание ModuleOptions с помощью абстрактной фабрики \Nnx\ModuleOptions\ModuleConfigKeyProviderInterface
 
 ## Быстрый старт
 
-В корне проекта создать класс отвечающй за описание настроек модуля
+В корне проекта создать класс, отвечающий за описание настроек модуля:
 
-- По умолчанию класс должен распологаться в src\Options\ModuleOptions.php (**Месторасположение по умолачнаию можно изменить через настройки @see \Nnx\ModuleOptions\Options\ModuleOptions::$moduleOptionsClassNameSuffix)
+- По умолчанию класс должен располагаться в src\Options\ModuleOptions.php (**Месторасположение по умолачанию можно изменить через настройки @see \Nnx\ModuleOptions\Options\ModuleOptions::$moduleOptionsClassNameSuffix);
 - ModuleOptions должен:
-    - Имплементировать интерфейс \Nnx\ModuleOptions\ModuleOptionsInterface
-    - Класс должен наследоваться от \Zend\Stdlib\AbstractOptions
-- Класс модуля должен имплементировать \Nnx\ModuleOptions\ModuleConfigKeyProviderInterface
-- В классе модуля реализовать метод getModuleConfigKey возвращающий имя ключа, по которому в конфигах приложения, можно получить массив с данными, для настроек модуля
+    - Имплементировать интерфейс \Nnx\ModuleOptions\ModuleOptionsInterface;
+    - Класс должен наследоваться от \Zend\Stdlib\AbstractOptions;
+- Класс модуля должен имплементировать \Nnx\ModuleOptions\ModuleConfigKeyProviderInterface;
+- В классе модуля реализовать метод getModuleConfigKey, возвращающий имя ключа, по которому в конфигах приложения можно получить массив с данными для настроек модуля.
 
 ### Пример ModuleOptions:
 
@@ -21,7 +21,7 @@ src
         ModuleOptions
 ```
 
-- Пример релизации ModuleOptions
+- Пример релизации ModuleOptions:
 
 ```php
 
@@ -103,6 +103,6 @@ class Module implements
 
 Абстрактная фабрика \Nnx\ModuleOptions\DefaultModuleOptionsAbstractFactory:
 
-- Определяет по имени класса ModuleOptions, к какому модулю относится данный класс
-- Определяет имплементирует ли модуль интерфейс \Nnx\ModuleOptions\ModuleConfigKeyProviderInterface, если да, то модуль может вернуть ключ, по которому из конфига приложения, можно поулчить настройки модуля
-- Создает ModuleOptions, передавая ему конфиги модуля, в качестве аргумента конструктора
+- Определяет по имени класса ModuleOptions, к какому модулю относится данный класс;
+- Определяет, имплементирует ли модуль интерфейс \Nnx\ModuleOptions\ModuleConfigKeyProviderInterface. Если да, то модуль может вернуть ключ, по которому из конфига приложения можно получить настройки модуля;
+- Создает ModuleOptions, передавая ему конфиги модуля в качестве аргумента конструктора.
